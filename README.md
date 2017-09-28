@@ -20,7 +20,7 @@ The code for the Push Plugin for NativeScript.
 
 - Add the Push Plugin (from NPM). This will install the push plugin in the `node_modules` folder, in the root of the project. When adding a new platform (or using an existing one) the plugin will be added there as well. Go to the application folder and add the push plugin:
 
-		tns plugin add nativescript-push-notifications
+		tns plugin add nativescript-ssi-push-notifications
 
 ### Android
 
@@ -33,7 +33,7 @@ The code for the Push Plugin for NativeScript.
 - Add sample code in app/main-view-model.js in the function HelloWorldModel() like this one to subscribe and receive messages (enter your Firebase Cloud Messaging **Sender ID** in the options of the register method):
 
 ```javascript
-	var pushPlugin = require("nativescript-push-notifications");
+	var pushPlugin = require("nativescript-ssi-push-notifications");
 	var self = this;
 	pushPlugin.register({ senderID: '<ENTER_YOUR_PROJECT_NUMBER>' }, function (data){
 		self.set("message", "" + JSON.stringify(data));
@@ -71,7 +71,7 @@ The plugin will default to version 10.0.1 of the `firebase-messaging` SDK.  If y
 - Add sample code in app/main-view-model.js in the function HelloWorldModel() like this one to subscribe and receive messages (Enter your google project id in the options of the register method):
 
 ```javascript
-	var pushPlugin = require("nativescript-push-notifications");
+	var pushPlugin = require("nativescript-ssi-push-notifications");
         var self = this;
         var iosSettings = {
             badge: true,
@@ -125,7 +125,7 @@ The plugin will default to version 10.0.1 of the `firebase-messaging` SDK.  If y
 ## API
 ```javascript
 	// Get reference to the push plugin module.
-	var pushPlugin = require('nativescript-push-notifications');
+	var pushPlugin = require('nativescript-ssi-push-notifications');
 ```
 
 - ***register*** - use to subscribe device for push notifications
@@ -329,7 +329,7 @@ In order to use the plugin with Telerik Backend Services take a look at the offi
 
 ## Android Configuration for using Firebase Cloud Messaging
 
-From version **0.1.0** the `nativescript-push-notifications` module for Android relies on the Firebase Cloud Messaging (FCM) SDK. In the steps below you will be guided to complete a few additional steps to prepare your Android app to receive push notifications from FCM.
+From version **0.1.0** the `nativescript-ssi-push-notifications` module for Android relies on the Firebase Cloud Messaging (FCM) SDK. In the steps below you will be guided to complete a few additional steps to prepare your Android app to receive push notifications from FCM.
 
 1. Add the FCM SDK
 

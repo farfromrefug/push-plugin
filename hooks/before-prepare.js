@@ -13,6 +13,6 @@ module.exports = function ($logger, $projectData) {
     }
 
     function _log (str) {
-        $logger.info('nativescript-push-notifications -- ' + str);
+        $logger.info('nativescript-ssi-push-notifications -- ' + str);
     }
 };
