@@ -32,6 +32,15 @@ module.exports = (function() {
                 self.notificationCallbackIOS(userInfo);
             });
 
+            this._addObserver("silentNotificationHandler", function(context) {
+                var s = context.userInfo.objectForKey('message');
+                if (s!=null) {
+                    s = s.replace(/\r/g, "").replace(/\n/g, "");
+                }
+                var userInfo = JSON.parse(s);
+                self.notificationCallbackIOS(userInfo);
+            });
+
             this.isInitialized = true;
         },
         register: function(settings, success, error) {
