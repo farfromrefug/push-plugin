@@ -24,7 +24,11 @@ module.exports = (function() {
 
             // subscribe to the notification received event.
             this._addObserver("notificationReceived", function(context) {
-                var userInfo = JSON.parse(context.userInfo.objectForKey('message'));
+                var s = context.userInfo.objectForKey('message');
+                if (s!=null) {
+                    s = s.replace(/\r/g, "").replace(/\n/g, "");
+                }
+                var userInfo = JSON.parse(s);
                 self.notificationCallbackIOS(userInfo);
             });
 
