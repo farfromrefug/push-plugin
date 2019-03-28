@@ -65,6 +65,7 @@ public class PushPlugin extends FirebaseMessagingService {
         RemoteMessage.Notification whatever = null;
 
         if (cachedData != null) {
+            Log.d(TAG, "Cached data is not empty!");
             executeOnMessageReceivedCallback(cachedData, whatever);
             cachedData = null;
         }
@@ -75,6 +76,7 @@ public class PushPlugin extends FirebaseMessagingService {
      * In case the callback is not present, cache the data;
      *
      * @param data
+     * @param notif
      */
     public static void executeOnMessageReceivedCallback(Map<String, String> data, RemoteMessage.Notification notif) {
         JsonObjectExtended jsonData = convertMapToJson(data);
@@ -100,15 +102,8 @@ public class PushPlugin extends FirebaseMessagingService {
 
     private static void executeOnMessageReceivedCallback(JsonObjectExtended dataAsJson, RemoteMessage.Notification notif) {
         if (onMessageReceivedCallback != null) {
-            String msg = null;
-            try {
-                msg = dataAsJson.getString("message");
-            } catch (JSONException ex) {
-                ex.printStackTrace();
-            }
-
-            Log.d(TAG, "Sending message to client: " + msg);
-            onMessageReceivedCallback.success(msg, dataAsJson.toString(), notif);
+            Log.d(TAG, "Passing data and notification to callback...");
+            onMessageReceivedCallback.success(dataAsJson.toString(), notif);
         } else {
             Log.d(TAG, "No callback function - caching the data for later retrieval.");
             cachedData = dataAsJson;
@@ -125,15 +120,11 @@ public class PushPlugin extends FirebaseMessagingService {
         Log.d(TAG, "New Push Message: " + data);
         Log.d(TAG, "Msg notification: " + notif);
 
-        // If the application has the callback registered and Plugin is active
-        // execute the callback. Otherwise, create new notification in the notification bar of the user.
-        if (onMessageReceivedCallback != null && isActive) {
-            executeOnMessageReceivedCallback(data, notif);
-        } else {
-            Log.d(TAG, "Creating our own notification in tray...");
-            Context context = getApplicationContext();
-            NotificationBuilder.createNotification(context, data);
+        if (notif != null) {
+            Log.d(TAG, "Notification body: " + notif.getBody());
         }
+
+        executeOnMessageReceivedCallback(data, notif);
     }
 
     /**
@@ -161,7 +152,7 @@ public class PushPlugin extends FirebaseMessagingService {
     /**
      * This method always returns true. It is here only for legacy purposes.
      */
-    public static Boolean areNotificationsEnabled() {
+    public static boolean areNotificationsEnabled() {
         return true;
     }
 
