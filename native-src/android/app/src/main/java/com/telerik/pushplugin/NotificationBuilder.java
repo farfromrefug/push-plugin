@@ -84,7 +84,8 @@ public class NotificationBuilder {
             if (message != null) {
                 mBuilder.setContentText(message);
             } else {
-                mBuilder.setContentText("<missing message content>");
+                // don't show silent messages! dvnelson 5/2018
+               // mBuilder.setContentText("<missing message content>");
             }
 
             String msgcnt = msgData.get("msgcnt");
