@@ -31,3 +31,4 @@ export declare function register(settings: IosRegistrationOptions, success: (tok
 export declare function registerUserNotificationSettings(success: () => void, error: (error: NSError) => void): void;
 export declare function unregister(done: (context: any) => void): void;
 export declare function areNotificationsEnabled(done: (areEnabled: Boolean) => void): void;
+export declare function initPush(): void;

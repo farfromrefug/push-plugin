@@ -17,12 +17,24 @@ var pushSettings;
     }
 })();
 var _init = function (settings) {
-    if (!!pushSettings.isInitialized)
-        return;
+if (!!pushSettings.isInitialized)
+    return;
     pushSettings.settings = settings;
     pushSettings.notificationCallbackIOS = settings.notificationCallbackIOS;
     _addObserver("notificationReceived", function (context) {
-        var userInfo = JSON.parse(context.userInfo.objectForKey('message'));
+        var s = context.userInfo.objectForKey('message');
+        if (s != null) {
+            s = s.replace(/\r/g, "").replace(/\n/g, "");
+        }
+        var userInfo = JSON.parse(s);
+        pushSettings.notificationCallbackIOS(userInfo);
+    });
+    _addObserver("silentNotificationHandler", function (context) {
+        var s = context.userInfo.objectForKey('message');
+        if (s != null) {
+            s = s.replace(/\r/g, "").replace(/\n/g, "");
+        }
+        var userInfo = JSON.parse(s);
         pushSettings.notificationCallbackIOS(userInfo);
     });
     pushSettings.isInitialized = true;
