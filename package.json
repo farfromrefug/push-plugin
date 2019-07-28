@@ -1,6 +1,6 @@
 {
   "name": "nativescript-ssi-push-notifications",
-  "version": "1.3.5",
+  "version": "1.3.6",
   "description": "Receive push notifications in your NativeScript app on Android and iOS.",
   "main": "push-plugin",
   "typings": "index.d.ts",
