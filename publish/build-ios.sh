@@ -11,8 +11,9 @@ TARGET_NAME="$SOURCE_NAME"
 FRAMEWORK_NAME="$SOURCE_NAME"
 
 BUILD_DIR="$IOS_SOURCE_DIR/build"
-BUILD_FOR_DEVICE_DIR="$BUILD_DIR/Release-iphoneos"
-BUILD_FOR_SIMULATOR_DIR="$BUILD_DIR/Release-iphonesimulator"
+BUILD_PREFIX="Build/Products"
+BUILD_FOR_DEVICE_DIR="$BUILD_DIR/iphoneos/$BUILD_PREFIX/Release-iphoneos"
+BUILD_FOR_SIMULATOR_DIR="$BUILD_DIR/simulator/$BUILD_PREFIX/Release-iphonesimulator"
 BUILD_OUTPUT_DIR="$IOS_SOURCE_DIR/build/outputs"
 
 PLUGIN_TARGET_DIR="$CURRENT_DIR/../src/platforms"
@@ -29,6 +30,7 @@ xcodebuild -project $PROJECT_NAME -scheme $TARGET_NAME \
     -configuration Release \
     -sdk iphonesimulator \
     GCC_PREPROCESSOR_DEFINITIONS='$GCC_PREPROCESSOR_DEFINITIONS ' \
+    -derivedDataPath $BUILD_DIR/simulator \
     clean build -quiet
 
 echo "Build for iphoneos"
@@ -36,6 +38,7 @@ xcodebuild -project $PROJECT_NAME -scheme $TARGET_NAME \
     -configuration Release \
     -sdk iphoneos \
     GCC_PREPROCESSOR_DEFINITIONS='$GCC_PREPROCESSOR_DEFINITIONS ' \
+    -derivedDataPath $BUILD_DIR/iphoneos \
     clean build archive -quiet
 
 if [ -d "$BUILD_OUTPUT_DIR/$FRAMEWORK_NAME.framework" ]; then
