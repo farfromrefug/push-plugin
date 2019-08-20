@@ -30,8 +30,9 @@ public class PushPlugin extends NotifyFirebaseMessagingService {
      * @param callbacks
      */
     public static void register(Context appContext, String projectId, PushPluginListener callbacks) {
+        Log.d(TAG, " 777777777 PushPlugin Registering register");
         if (callbacks == null) {
-            Log.d(TAG, "Registering without providing a callback!");
+            Log.d(TAG, " 777777777 PushPlugin Registering without providing a callback!");
         }
 
         PushPlugin.getRegisterTokenInThread(projectId, callbacks);
@@ -46,7 +47,7 @@ public class PushPlugin extends NotifyFirebaseMessagingService {
      */
     public static void unregister(Context appContext, String projectId, PushPluginListener callbacks) {
         if (callbacks == null) {
-            Log.d(TAG, "Unregister without providing a callback!");
+            Log.d(TAG, " 777777777 PushPlugin Unregister without providing a callback!");
         }
         try {
             UnregisterTokenThread t = new UnregisterTokenThread(projectId, callbacks);
@@ -66,7 +67,7 @@ public class PushPlugin extends NotifyFirebaseMessagingService {
         RemoteMessage.Notification whatever = null;
 
         if (cachedData != null) {
-            Log.d(TAG, "Cached data is not empty!");
+            Log.d(TAG, " 777777777 PushPlugin Cached data is not empty!");
             executeOnMessageReceivedCallback(cachedData, whatever);
             cachedData = null;
         }
@@ -102,6 +103,7 @@ public class PushPlugin extends NotifyFirebaseMessagingService {
     }
 
     private static void executeOnMessageReceivedCallback(JsonObjectExtended dataAsJson, RemoteMessage.Notification notif) {
+        Log.d(TAG, " 777777777 PushPlugin executeOnMessageReceivedCallback");
         if (onMessageReceivedCallback != null) {
             Log.d(TAG, "Passing data and notification to callback...");
             onMessageReceivedCallback.success(dataAsJson.toString(), notif);
@@ -116,10 +118,11 @@ public class PushPlugin extends NotifyFirebaseMessagingService {
      */
     @Override
     public void onMessageReceived(RemoteMessage message) {
+        Log.d(TAG, " 777777777 PushPlugin onMessageReceived");
         if (onMessageReceivedCallback == null) {
             super.onMessageReceived(message);
-        }
-        if (!messageHandled) {
+            messageHandled = false;
+        } else if (!messageHandled) {
             Map<String, String> data = message.getData();
             RemoteMessage.Notification notif = message.getNotification();
             Log.d(TAG, "New Push Message: " + data);
@@ -164,11 +167,13 @@ public class PushPlugin extends NotifyFirebaseMessagingService {
     }
 
     private static void getRegisterTokenInThread(String projectId, PushPluginListener callbacks) {
+        Log.d(TAG, " 777777777 PushPlugin getRegisterTokenInThread");
         try {
             ObtainTokenThread t = new ObtainTokenThread(projectId, callbacks);
             t.start();
+            Log.d(TAG, " 777777777 PushPlugin Registering getRegisterTokenInThread thread started");
         } catch (Exception ex) {
-            callbacks.error("Thread failed to start: " + ex.getMessage());
+            callbacks.error(" 777777777 PushPlugin Thread failed to start: " + ex.getMessage());
         }
     }
 }
