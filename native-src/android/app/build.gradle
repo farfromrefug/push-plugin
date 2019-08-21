@@ -37,6 +37,12 @@ gradle.buildFinished {
             rename "app-debug.aar", "pushplugin.aar"
         }
 
+        copy {
+            from path
+            into "$projectDir/../../../platforms/android"
+            rename "app-debug.aar", "pushplugin.aar"
+        }
+
         println "\nPlugin copied to src/platforms/android folder."
     }
 }
