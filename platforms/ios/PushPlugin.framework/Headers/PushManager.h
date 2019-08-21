@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import "Push.h"
+#import "PushPlugin/Push.h"
 
 @interface PushManager : NSObject
 @end
