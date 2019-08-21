@@ -148,7 +148,7 @@ static IMP handleActionWithIdentifierOriginalMethod = NULL;
         appState = application.applicationState;
     }
     
-    if (appState == UIApplicationStateActive || appState == UIApplicationStateBackground) {
+    if (appState == UIApplicationStateActive || appState == UIApplicationStateBackground || appState == UIApplicationStateInactive) {
         [Push sharedInstance].notificationMessage = userInfo;
         [Push sharedInstance].isInline = appState == UIApplicationStateActive ;
         [[Push sharedInstance] notificationReceived]; 
